@@ -33,10 +33,9 @@ int main(void) {
 // NON-Interrupt subroutines
 void setup(void) {
 	//SALIDAS
-	//PORTD
 	DDRD = 0xFF;
 	DDRC |= 0x0F;
-	DDRB |= 0x0F;     // PB0–PB3 como salidas 
+	DDRB |= 0x0F;    
 	//Entradas
 	DDRB &= ~(1<<DDB4);
 	PORTB |= (1 << PORTD4);
