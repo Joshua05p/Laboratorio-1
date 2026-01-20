@@ -1,17 +1,17 @@
 /*
  * Laboratorio.c
  *
- * Created: 15/01/2026 19:16:36
+ * Created: 21/04/2025 16:46:36
  * Author : Joshua
  */
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "Display.h"
 
 /****************************************/
 // Function prototypes
 void confi_timer1();
-int display[6] = {0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92};
 int contador = 6;
 int jugador1 = 0;
 int jugador2 = 0;
@@ -35,7 +35,7 @@ void setup(void) {
 	//SALIDAS
 	DDRD = 0xFF;
 	DDRC |= 0x0F;
-	DDRB |= 0x0F;    
+	DDRB |= 0x0F;
 	//Entradas
 	DDRB &= ~(1<<DDB4);
 	PORTB |= (1 << PORTD4);
@@ -82,7 +82,7 @@ ISR(TIMER1_OVF_vect)
 		PORTD = 0xFF;
 		} else {
 		contador = contador - 1;
-		PORTD = display[contador];
+		f_display(contador);
 	}
 
 }
