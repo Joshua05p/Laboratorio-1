@@ -98,19 +98,27 @@ ISR(PCINT0_vect)
 			if (!(PINB & (1 << PINB5)))
 				{
 					//contador 1
+					
 					jugador1++;
-					jugador1 &= 0x0F;
-				if ( (jugador1 & 0x0F) == 0x0F )
-				{
+					if (jugador1 == 1){
+						PORTC |= (1<<PORTC0);
+						PORTC &= ~((1<<PORTC1)|(1<<PORTC2)|(1<<PORTC3));
+					}else if(jugador1 == 2){
+						PORTC |= (1<<PORTC1);
+						PORTC &= ~((1<<PORTC0)|(1<<PORTC2)|(1<<PORTC3));
+					}else if(jugador1 == 3){
+						PORTC |= (1<<PORTC2);
+						PORTC &= ~((1<<PORTC1)|(1<<PORTC0)|(1<<PORTC3));
+				} else{
 					PORTB = 0x00;
 					PORTC = 0x0F;
 					PORTD = 0xF9;
 					carrera = 0;
-					}else{
-					PORTC = (PORTC & 0xF0) | (jugador1 & 0x0F);
+					jugador1 = 0;
+					jugador2 = 0;	
 				}
-	
-				}
+				
+			}
 	}
 		
 
@@ -121,18 +129,26 @@ ISR(PCINT1_vect)
 	if (carrera == 1){
 			if (!(PINC & (1 << PINC4)))
 			{
-				//contador 2
-				jugador2++;
-				jugador2 &= 0x0F;
-				if ( (jugador2 & 0x0F) == 0x0F )
-				{
-					PORTC = 0x00;
-					PORTB = 0x0F;
-					PORTD = 0xA4;
-					carrera = 0;
-				}else{
-					PORTB = (PORTB & 0xF0) | (jugador2 & 0x0F);
-				}
+					//contador 2
+					
+					jugador2++;
+					if (jugador2 == 1){
+						PORTB |= (1<<PORTB0);
+						PORTB &= ~((1<<PORTB1)|(1<<PORTB2)|(1<<PORTB3));
+						}else if(jugador2 == 2){
+						PORTB |= (1<<PORTB1);
+						PORTB &= ~((1<<PORTB0)|(1<<PORTB2)|(1<<PORTB3));
+						}else if(jugador2 == 3){
+						PORTB |= (1<<PORTB2);
+						PORTB &= ~((1<<PORTB1)|(1<<PORTB0)|(1<<PORTB3));
+						} else{
+						PORTC = 0x00;
+						PORTB = 0x0F;
+						PORTD = 0xA4;
+						carrera = 0;
+						jugador2 = 0;
+						jugador1 = 0;
+					}
 			}
 	}
 }
